@@ -4,7 +4,7 @@ import API from '../api/index'
 
 export default {
   install (Vue) {
-    const fetch = options => {
+    const http = options => {
       options = {
         loading: options.loading === undefined ? true : options.loading,
         globalError: options.globalError === undefined ? true : options.globalError, // 统一进行错误处理
@@ -98,6 +98,6 @@ export default {
       )
       return service(options)
     }
-    Vue.prototype.$fetch = fetch
+    Vue.prototype.$http = http
   }
 }

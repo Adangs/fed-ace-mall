@@ -9,11 +9,11 @@ import 'iview/dist/styles/iview.css'
 // global css
 import './assets/style/index.less'
 // global request
-import fetch from './utils/request'
+import http from './utils/request'
 // global filters
 import * as filters from './utils/filters'
-
-Vue.use(fetch) // global filters
+// request
+Vue.use(http)
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
