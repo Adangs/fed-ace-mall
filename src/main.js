@@ -3,16 +3,22 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
-import './assets/style/index.less' // global css
-
+// iView ui
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+// global css
+import './assets/style/index.less'
+// global request
 import fetch from './utils/request'
+// global filters
+import * as filters from './utils/filters'
 
-import * as filters from './utils/filters' // global request
 Vue.use(fetch) // global filters
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+Vue.use(iView)
 
 // 全局滚动事件
 Vue.directive('xscroll', {

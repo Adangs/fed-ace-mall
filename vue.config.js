@@ -29,9 +29,17 @@ module.exports = {
   // 如果你不需要使用eslint，把lintOnSave设为false即可
   lintOnSave: true,
   chainWebpack: config => {
+    // alias
     config.resolve.alias
-      .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
-      .set('_c', resolve('src/components'))
+      .set('@', resolve('src')) // key,value自行定义
+    // rule
+    config.module
+      .rule('vue')
+      .use('iview-loader')
+      .loader('iview-loader')
+      .tap(() => {
+        return { prefix: false }
+      })
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false

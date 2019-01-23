@@ -15,9 +15,7 @@
     <dl>
       <dt>全局请求</dt>
       <dd>
-        <button @click="onFetch">
-          {{ loading ? '正在请求...' : '点击请求' }}
-        </button>
+        <Button type="primary" @click="onFetch">{{ loading ? '正在请求...' : '点击请求' }}</Button>
       </dd>
     </dl>
   </div>
