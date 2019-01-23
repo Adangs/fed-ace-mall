@@ -9,9 +9,9 @@ import 'iview/dist/styles/iview.css'
 // global css
 import './assets/style/index.scss'
 // global request
-import http from './utils/request'
+import http from './utils/x-request'
 // global filters
-import * as filters from './utils/filters'
+import * as filters from './utils/x-filters'
 // request
 Vue.use(http)
 // register global utility filters.

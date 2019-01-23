@@ -1,25 +1,44 @@
 import axios from 'axios'
+import { Message } from 'iview'
 import store from '@/store'
-import API from '../api/index'
+import router from '@/router'
+import API from '@/api/index'
+
+/**
+ 调用request方法
+ 调用方式:
+ 方式一，只返回接口正确的状态数据，统一处理错误信息：
+ const res = await this.$http({
+   url: 'apiMapKey',
+   data: {'test': 1}
+ });
+ console.log(res)
+ 方式二，单独处理错误情况：
+ this.$http({
+   url: 'apiMapKey',
+   data: {'test': 1}
+ }).then(res => {
+   console.log(res)
+ }).catch(err => {
+   console.log(err)
+ });
+*/
 
 export default {
   install (Vue) {
     const http = options => {
       options = {
-        loading: options.loading === undefined ? true : options.loading,
+        loading: options.loading === undefined ? true : options.loading, // 是否维护全局loading
         globalError: options.globalError === undefined ? true : options.globalError, // 统一进行错误处理
-        contentType: options.contentType || 'form', // application/x-www-form-urlencoded
-        baseURL: options.baseURL === undefined ? process.env.BASE_API : options.baseURL,
-        timeout: options.timeout || 20000,
+        timeout: options.timeout || 20000, // 超时
         url: API[options.url] || options.url,
         method: options.method || 'post', // 调整为默认post请求
         headers: options.headers || {},
         params: options.params || {}, // get 方式参数,
-        data: options.data || {}
+        data: options.data || {} // post daata
       }
       // create an axios instance
       const service = axios.create({
-        baseURL: options.baseURL, // api 的 base_url
         timeout: options.timeout // request timeout
       })
       // request interceptor
@@ -47,13 +66,12 @@ export default {
          * 当code返回如下情况则说明权限有问题，登出并返回到登录页
          * 如想通过 xmlhttprequest 来状态码标识 逻辑可写在下面error中
          * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
-         */
+         **/
         response => {
           const res = response.data
-          const code = Number(res.code)
           // 全局请求状态
           store.dispatch('app/setLoading', false)
-          if (res.code && code !== 200) {
+          if (!res.success) {
             // 统一错误处理
             switch (res.code) {
               // 不进行统一处理错误提示信息的code
@@ -61,7 +79,9 @@ export default {
                 return Promise.reject(res)
               default:
                 // API接口错误提示信息统一处理，前期把报错的API地址一同暴露给用户，便于开发人员排查问题
-                alert(JSON.stringify(res))
+                console.warn('API地址：', response.config.url)
+                console.warn('API结果：', res)
+                Message.error(res.msg || '出错啦~')
             }
             return Promise.reject(res)
           } else {
@@ -75,23 +95,33 @@ export default {
           console.log('request---> ', err.request) // for debug
           console.log('response---> ', err.response) // for debug
 
-          // 401
-          if (err.response && err.response.status === 401) {
-            // 没有请求接口权限处理
-            return Promise.reject(err)
-          } else {
-            let msg = [err.message]
-            if (err.response && err.response.data) {
-              // API response 返回非200情况下的处理逻辑
-              msg = [err.response.data.message, err.response.data.path]
-            } else if (err.request && err.request.timeout) {
-              msg = ['网络繁忙，请稍后再试！']
+          if (err.request || err.response) {
+            // 401
+            if (err.response && err.response.status === 401) {
+              // 没有请求接口权限处理
+              router.push({ path: '/login' })
+              Message.error({
+                content: '登录状态失效，请重新登录',
+                duration: 5
+              })
+              return Promise.reject(err)
+            } else {
+              let msg = [err.message]
+              if (err.response && err.response.data) {
+                // API response 返回非200情况下的处理逻辑
+                msg = [err.response.data.message, err.response.data.path]
+              } else if (err.request && err.request.timeout) {
+                msg = ['网络繁忙，请稍后再试！']
+              }
+              Message.error({
+                content: msg.join(' - '),
+                duration: 5
+              })
+              return Promise.reject(err)
             }
-            console.log({
-              message: msg.join(' - '),
-              type: 'error',
-              duration: 5 * 1000
-            })
+          } else {
+            // 如cancel等特殊情况走这边
+            console.log('err---> ', err)
             return Promise.reject(err)
           }
         }

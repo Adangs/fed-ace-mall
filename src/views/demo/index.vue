@@ -45,8 +45,8 @@ export default {
   methods: {
     async onFetch () {
       console.log('开始请求')
-      const res = await this.$fetch({
-        url: 'UUID'
+      const res = await this.$http({
+        url: 'error'
       })
       console.log(res)
     }
