@@ -7,7 +7,7 @@ import store from './store/index'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 // global css
-import './assets/style/index.less'
+import './assets/style/index.scss'
 // global request
 import http from './utils/request'
 // global filters

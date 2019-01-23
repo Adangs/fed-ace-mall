@@ -1,8 +1,10 @@
-@import "./mixin.less";
+@import "./mixin.scss";
+@import "../iconfont/iconfont.css";
+
 html, body, #app{ height: 100%;}
 
 .g-layout-all{
-  .flexVertical(); height: 100%;
+  @include flexVertical(); height: 100%;
   .g-layout-header{ background: #ddd; height: 80px; line-height: 80px; text-align: center; }
 
   .g-layout-content{
