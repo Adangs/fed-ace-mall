@@ -46,7 +46,7 @@ export default {
     async onFetch () {
       console.log('开始请求')
       const res = await this.$http({
-        url: 'error'
+        url: 'success'
       })
       console.log(res)
     }

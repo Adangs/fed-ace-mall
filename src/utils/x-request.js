@@ -86,7 +86,7 @@ export default {
             return Promise.reject(res)
           } else {
             // 成功
-            return Promise.resolve(res)
+            return Promise.resolve(res.body || {})
           }
         },
         err => {
