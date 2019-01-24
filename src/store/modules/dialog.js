@@ -12,7 +12,7 @@ const dialog = {
     }
   },
   actions: {
-    set ({ commit, state }, data) {
+    set({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         commit('SET_MESSAGE', data)
         resolve()

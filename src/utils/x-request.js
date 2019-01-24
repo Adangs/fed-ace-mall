@@ -25,7 +25,7 @@ import API from '~@/api/index'
 */
 
 export default {
-  install (Vue) {
+  install(Vue) {
     const http = options => {
       options = {
         cancel: options.cancel === undefined ? true : options.cancel, // 重复请求拦截

@@ -16,12 +16,14 @@
       <dt>全局请求</dt>
       <dd>
         <p>
-          <button @click="onFetch">
+          <Button @click="onFetch">
             {{ loading ? '正在请求...' : '点击请求，快速点击重复请求会被拦截' }}
-          </button>
+          </Button>
         </p>
         <p>
-          <button @click="onCancel">主动拦截某个请求</button>
+          <Button @click="onCancel">
+            主动拦截某个请求
+          </Button>
         </p>
       </dd>
     </dl>
@@ -29,7 +31,7 @@
       <dt>引用图片</dt>
       <dd>
         <p><img src="~@/assets/images/logo.png" alt="logo"></p>
-        <p class="bg-img"></p>
+        <p class="bg-img" />
       </dd>
     </dl>
   </div>
@@ -44,7 +46,7 @@ export default {
   components: {
     XNull
   },
-  data () {
+  data() {
     return {
       date: new Date()
     }
@@ -54,11 +56,11 @@ export default {
       'loading'
     ])
   },
-  created () {
+  created() {
 
   },
   methods: {
-    async onFetch () {
+    async onFetch() {
       console.log('开始请求')
       const res = await this.$http({
         url: 'success'
@@ -66,7 +68,7 @@ export default {
       // alert(JSON.stringify(res))
       console.log(res)
     },
-    onCancel () {
+    onCancel() {
       // 主动拦截某个请求
       this.$store.dispatch('app/removePending', {
         url: API['success'],

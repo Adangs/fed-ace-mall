@@ -23,10 +23,10 @@ Vue.use(iView)
 
 // 全局滚动事件
 Vue.directive('xscroll', {
-  bind (el, binding) {
+  bind(el, binding) {
     const container = el.attributes['x-scroll-container']
     const selectWrap = container ? el.querySelector(container.nodeValue) : el
-    selectWrap.addEventListener('scroll', function () {
+    selectWrap.addEventListener('scroll', function() {
       const sign = el.attributes['xscroll-threshold'] ? el.attributes['xscroll-threshold'].nodeValue : 10
       const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
       if (scrollDistance <= sign) {
