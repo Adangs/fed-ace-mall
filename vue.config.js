@@ -30,7 +30,7 @@ module.exports = {
   chainWebpack: config => {
     // alias
     config.resolve.alias
-      .set('@', resolve('src')) // key,value自行定义
+      .set('~@', resolve('src')) // key,value自行定义
     // rule
     config.module
       .rule('vue')
