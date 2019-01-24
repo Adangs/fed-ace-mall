@@ -10,7 +10,7 @@ html, body, #app{ height: 100%;}
   .g-layout-content{
     flex: 1; display: flex;
     .g-layout-aside{ width: 100px; background-color: #eee;}
-    .g-layout-main{ flex: 1;}
+    .g-layout-main{ flex: 1; overflow: auto; }
   }
 }
 

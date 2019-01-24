@@ -30,25 +30,37 @@
     <dl>
       <dt>引用图片</dt>
       <dd>
-        <p><img src="~@/assets/images/logo.png" alt="logo"></p>
-        <p class="bg-img" />
+        <img src="~@/assets/images/logo.png" alt="logo">
+        <span class="bg-img" />
+      </dd>
+    </dl>
+    <dl>
+      <dt>
+        <Button @click="onQrcode">
+          更换二维码内容
+        </Button>
+      </dt>
+      <dd>
+        <x-qrcode :value="code" />
       </dd>
     </dl>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { XNull } from '../../components'
+import { XNull, XQrcode } from '~@/components'
 import API from '~@/api/index'
 
 export default {
   name: 'Demo',
   components: {
-    XNull
+    XNull,
+    XQrcode
   },
   data() {
     return {
-      date: new Date()
+      date: new Date(),
+      code: +new Date()
     }
   },
   computed: {
@@ -74,6 +86,9 @@ export default {
         url: API['success'],
         cancel: true
       })
+    },
+    onQrcode() {
+      this.code = +new Date()
     }
   }
 }
@@ -81,7 +96,7 @@ export default {
 
 <style lang="scss">
   button{ background: #ddd;}
-  .bg-img{ width: 200px; height: 200px; background: url('~@/assets/images/logo.png') no-repeat; background-size: cover}
+  .bg-img{ width: 200px; height: 200px; display: inline-block; background: url('~@/assets/images/logo.png') no-repeat; background-size: cover}
   dd{
     p{ padding-bottom: 10px;}
   }
