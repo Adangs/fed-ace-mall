@@ -23,6 +23,7 @@ export default {
   name: 'Login',
   components: {
     XQrcode
+
   },
   data() {
     return {
