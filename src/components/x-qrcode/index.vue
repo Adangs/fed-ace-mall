@@ -7,7 +7,6 @@ import QRCode from 'qrcode/build/qrcode'
 
 export default {
   name: 'Qrcode',
-
   props: {
     /**
      * The value of the QR code.
@@ -24,10 +23,7 @@ export default {
     options: {
       type: Object,
       default() {
-        return {
-          margin: 2,
-          width: 200
-        }
+        return {}
       }
     },
 
@@ -39,7 +35,6 @@ export default {
       default: 'canvas'
     }
   },
-
   watch: {
     value: {
       deep: true,
@@ -61,8 +56,13 @@ export default {
      */
     generate() {
       const { options, tag } = this
+      const Options = Object.assign({
+        margin: 2,
+        width: 200
+      }, options)
+
       if (tag === 'canvas') {
-        QRCode.toCanvas(this.$el, String(this.value), options, (error) => {
+        QRCode.toCanvas(this.$el, String(this.value), Options, (error) => {
           if (error) {
             throw error
           }
