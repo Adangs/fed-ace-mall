@@ -39,6 +39,19 @@ module.exports = {
       .tap(() => {
         return { prefix: false }
       })
+    // 调整build文件命名
+    // config.optimization.splitChunks({
+    //   cacheGroups: {
+    //     vendors: {
+    //       name: `chunk_vendors`,
+    //       chunks: 'initial'
+    //     },
+    //     common: {
+    //       name: `chunk_common`,
+    //       chunks: 'initial'
+    //     }
+    //   }
+    // })
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false,

@@ -22,7 +22,7 @@ export const routerMap = [
       {
         path: '',
         name: 'demo',
-        component: () => import(/* webpackChunkName: "common" */ '~@/views/demo/index'),
+        component: () => import(/* webpackChunkName: "demo" */ '~@/views/demo/index'),
         meta: { title: 'DEMO' }
       }]
   }
