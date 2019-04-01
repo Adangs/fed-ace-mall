@@ -30,7 +30,7 @@
     <dl>
       <dt>引用图片</dt>
       <dd>
-        <img src="~@/assets/images/logo.png" alt="logo">
+        <img src="../../assets/images/logo.png" alt="logo">
         <span class="bg-img" />
       </dd>
     </dl>
@@ -48,8 +48,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { XNull, XQrcode } from '~@/components'
-import API from '~@/api/index'
+import { XNull, XQrcode } from '~/components'
+import API from '~/api/index'
 
 export default {
   name: 'Demo',
@@ -96,7 +96,7 @@ export default {
 
 <style lang="scss">
   button{ background: #ddd;}
-  .bg-img{ width: 200px; height: 200px; display: inline-block; background: url('~@/assets/images/logo.png') no-repeat; background-size: cover}
+  .bg-img{ width: 200px; height: 200px; display: inline-block; background: url('../../assets/images/logo.png') no-repeat; background-size: cover}
   dd{
     p{ padding-bottom: 10px;}
   }

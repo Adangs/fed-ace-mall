@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { XQrcode } from '~@/components'
+import { XQrcode } from '~/components'
 
 export default {
   name: 'Login',
@@ -44,7 +44,7 @@ export default {
 <style lang="scss">
   .g-login-all{
     height: 100%; position: relative; background-color: rgba(0,0,0,.2);
-    .bg{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: url('~@/assets/images/bg-login.jpg') no-repeat center center; background-size: cover; filter: blur(50px); opacity: .4; z-index: -1;}
+    .bg{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: url('../../assets/images/bg-login.jpg') no-repeat center center; background-size: cover; filter: blur(50px); opacity: .4; z-index: -1;}
     .content{
       width: 360px; position: absolute; padding: 40px 20px; left: 50%; top: 50%; background: #fff; min-height: 300px; box-shadow: 0 0 10px rgba(0,0,0,.2); transform: translate(-50%, -50%); border-radius: 5px; overflow: hidden;
       .code{
