@@ -19,7 +19,7 @@ Vue.use(http)
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'small' })
 
 // 全局滚动事件
 Vue.directive('xscroll', {

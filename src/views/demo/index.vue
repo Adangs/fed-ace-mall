@@ -16,12 +16,12 @@
       <dt>全局请求</dt>
       <dd>
         <p>
-          <el-button @click="onFetch">
+          <el-button type="primary" @click="onFetch">
             {{ loading ? '正在请求...' : '点击请求，快速点击重复请求会被拦截' }}
           </el-button>
         </p>
         <p>
-          <el-button @click="onCancel">
+          <el-button type="primary" @click="onCancel">
             主动拦截某个请求
           </el-button>
         </p>
