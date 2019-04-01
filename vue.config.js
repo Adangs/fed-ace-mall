@@ -31,14 +31,6 @@ module.exports = {
     // alias
     config.resolve.alias
       .set('~', resolve('src')) // key,value自行定义
-    // rule
-    config.module
-      .rule('vue')
-      .use('iview-loader')
-      .loader('iview-loader')
-      .tap(() => {
-        return { prefix: false }
-      })
     // 调整build文件命名
     // config.optimization.splitChunks({
     //   cacheGroups: {

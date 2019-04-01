@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
-// iView ui
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+// Element UI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 // global css
 import './assets/style/index.scss'
 // global request
@@ -19,7 +19,7 @@ Vue.use(http)
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-Vue.use(iView)
+Vue.use(ElementUI)
 
 // 全局滚动事件
 Vue.directive('xscroll', {

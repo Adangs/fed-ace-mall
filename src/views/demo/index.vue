@@ -16,14 +16,14 @@
       <dt>全局请求</dt>
       <dd>
         <p>
-          <Button @click="onFetch">
+          <el-button @click="onFetch">
             {{ loading ? '正在请求...' : '点击请求，快速点击重复请求会被拦截' }}
-          </Button>
+          </el-button>
         </p>
         <p>
-          <Button @click="onCancel">
+          <el-button @click="onCancel">
             主动拦截某个请求
-          </Button>
+          </el-button>
         </p>
       </dd>
     </dl>
@@ -36,9 +36,9 @@
     </dl>
     <dl>
       <dt>
-        <Button @click="onQrcode">
+        <el-button @click="onQrcode">
           更换二维码内容
-        </Button>
+        </el-button>
       </dt>
       <dd>
         <x-qrcode :value="code" />

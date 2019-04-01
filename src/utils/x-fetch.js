@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '~/store'
 import API from '~/api/index'
+import { Message } from 'element-ui'
 /**
  调用request方法
  调用方式:
@@ -96,7 +97,11 @@ const http = options => {
             console.warn('API地址：', response.config.url)
             console.warn('API结果：', res)
             // 更换成ui对象的提示方法
-            alert(res.msg || '出错啦~')
+            Message({
+              message: res.msg || `api code：${res.code}`,
+              type: 'error',
+              duration: 5 * 1000
+            })
         }
         return Promise.reject(res)
       } else {
@@ -116,10 +121,11 @@ const http = options => {
           // 没有请求接口权限处理
           // router.push({ path: '/login' })
           // 更换成ui对象的提示方法
-          alert(JSON.stringify({
-            content: '登录状态失效，请重新登录',
-            duration: 5
-          }))
+          Message({
+            message: '登录状态失效，请重新登录',
+            type: 'error',
+            duration: 5 * 1000
+          })
           return Promise.reject(err)
         } else {
           let msg = [err.message]
@@ -130,10 +136,11 @@ const http = options => {
             msg = ['网络繁忙，请稍后再试！']
           }
           // 更换成ui对象的提示方法
-          alert(JSON.stringify({
-            content: msg.join(' - '),
-            duration: 5
-          }))
+          Message({
+            message: msg.join(' - '),
+            type: 'error',
+            duration: 5 * 1000
+          })
           return Promise.reject(err)
         }
       } else {
