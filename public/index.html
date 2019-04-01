@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" id="viewport" content="width=device-width,initial-scale=1.0">
     <!--<link rel="icon" href="<%= BASE_URL %>favicon.ico">-->
     <title>ACE</title>
   </head>
@@ -13,5 +13,11 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      // 适配手机端
+      if(/iphone|ipod|ipad|android|huawei/gi.test(navigator.userAgent)) {
+        document.getElementById('viewport').content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover'
+      }
+    </script>
   </body>
 </html>
