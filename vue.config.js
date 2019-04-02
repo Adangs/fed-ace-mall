@@ -57,6 +57,11 @@ module.exports = {
         target: 'http://rap2api.taobao.org/app/mock/125191',
         ws: true,
         changeOrigin: true
+      },
+      '/socket': {
+        target: 'http://192.168.2.121:9008',
+        ws: true,
+        changeOrigin: true
       }
     }
   }

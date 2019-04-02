@@ -3,7 +3,7 @@
     <div class="bg" />
     <div class="content">
       <div class="code">
-        <x-qrcode :value="code" :options="codeOptions" />
+        <x-qrcode v-if="socketId" :value="codeVal" :options="codeOptions" />
       </div>
       <dl class="tips">
         <dt>请使用手机扫码登录</dt>
@@ -18,6 +18,7 @@
 
 <script>
 import { XQrcode } from '~/components'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Login',
@@ -27,25 +28,30 @@ export default {
   },
   data() {
     return {
-      code: +new Date(),
       codeOptions: {
         width: 260
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'socketId'
+    ]),
+    // 二维码内容
+    codeVal() {
+      return `${window.location.origin}/mobile?id=${this.socketId}`
+    }
+  },
   created() {
     this.socket()
   },
   methods: {
-    socket() {
-      // 连接成功
-      this.$socket.on('connect', () => {
-        this.$socket.emit('open', '客户端向服务端发送的信息')
-      })
-      // 断开连接
-      this.$socket.on('disconnect', () => {
-        this.$socket.emit('disconnect')
+    async socket() {
+      // 发送信息
+      const socket = await this.$socket()
+      console.log(socket)
+      socket.on('message', (res) => {
+        console.log('message-> ', res)
       })
     }
   }

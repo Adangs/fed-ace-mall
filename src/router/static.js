@@ -17,7 +17,13 @@ export default [
       }]
   }, {
     path: '/login',
-    component: () => import(/* webpackChunkName: "common" */ '~/views/login/index'),
+    name: '扫码登录',
+    component: () => import(/* webpackChunkName: "demo" */ '~/views/login/index'),
+    meta: { title: '扫码登录' }
+  }, {
+    path: '/mobile',
+    name: '用户登录',
+    component: () => import(/* webpackChunkName: "demo" */ '~/views/login/mobile'),
     meta: { title: '用户登录' }
   }
 ]

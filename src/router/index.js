@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 Vue.use(Router)
 
 // 路由白名单
-const whiteList = ['/', '/login', '/demo']
+const whiteList = ['/', '/login', '/mobile', '/demo']
 
 const router = new Router({
   mode: 'history',

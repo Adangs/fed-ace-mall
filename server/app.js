@@ -33,16 +33,10 @@ app.use(views(__dirname, { extension: 'pug' }))
 // app.use(favicon())
 
 // 路由规则
-// require('./server/routes')(app)
+require('./routes')(app)
 
 // vue historyApiFallback 配置
 app.use(historyFallback())
-
-// 设置静态服务器资源
-app.use(staticCache(path.join(__dirname, '../static'), {
-  gzip: true,
-  usePrecompiledGzip: /text|application/ig
-}))
 
 // 缓存
 app.use(cacheControl({
@@ -56,12 +50,19 @@ app.on('error', (err, ctx) => {
   ctx.status = err.status || 500
   ctx.body = err.message
 })
-
 // 创建socket服务
-const XSocket = require('./utils/x-socket')
 const io = new IO()
 io.attach(app)
-XSocket(io)
+// 暂时存放在全局
+global.io = io.socket
+const XSocket = require('./utils/x-socket')
+XSocket(io.socket)
+
+// 设置静态服务器资源
+app.use(staticCache(path.join(__dirname, '../static'), {
+  gzip: true,
+  usePrecompiledGzip: /text|application/ig
+}))
 
 // 创建WEB服务
 const port = config.port || 3000

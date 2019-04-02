@@ -1,3 +1,5 @@
+const socket = require('./socket')
+
 module.exports = (app) => {
-  // app.use(favicon.routes())
+  app.use(socket.routes())
 }
