@@ -46,10 +46,9 @@ export default {
     this.socket()
   },
   methods: {
-    async socket() {
+    socket() {
       // 发送信息
-      const socket = await this.$socket()
-      console.log(socket)
+      const socket = this.$socket()
       socket.on('message', (res) => {
         console.log('message-> ', res)
       })
