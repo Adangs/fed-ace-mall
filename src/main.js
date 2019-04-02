@@ -12,7 +12,11 @@ import './assets/style/index.scss'
 import http from './utils/x-request'
 // global filters
 import * as filters from './utils/x-filters'
+// global socket
+import socket from './utils/x-socket'
 
+// socket
+Vue.use(socket)
 // request
 Vue.use(http)
 // register global utility filters.

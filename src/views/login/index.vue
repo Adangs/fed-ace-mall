@@ -34,9 +34,20 @@ export default {
     }
   },
   computed: {},
-  created() {},
+  created() {
+    this.socket()
+  },
   methods: {
-
+    socket() {
+      // 连接成功
+      this.$socket.on('connect', () => {
+        this.$socket.emit('open', '客户端向服务端发送的信息')
+      })
+      // 断开连接
+      this.$socket.on('disconnect', () => {
+        this.$socket.emit('disconnect')
+      })
+    }
   }
 }
 </script>

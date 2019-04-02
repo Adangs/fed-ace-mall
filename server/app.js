@@ -4,11 +4,11 @@ const path = require('path')
 const bodyParser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const staticCache = require('koa-static-cache')
-// const compress = require('koa-compress')
 const cacheControl = require('koa-cache-control')
 const historyFallback = require('koa2-history-api-fallback')
-const gzip = require('koa-gzip')
 const views = require('koa-views')
+const IO = require('koa-socket-2')
+
 // node 配置文件
 const config = require('./config/index')
 
@@ -29,7 +29,7 @@ app.use(async(ctx, next) => {
 app.use(views(__dirname, { extension: 'pug' }))
 
 // favicon
-// const favicon = require('./server/utils/ok-favicon')
+// const favicon = require('./utils/x-favicon')
 // app.use(favicon())
 
 // 路由规则
@@ -44,16 +44,6 @@ app.use(staticCache(path.join(__dirname, '../static'), {
   usePrecompiledGzip: /text|application/ig
 }))
 
-// gzip
-app.use(gzip())
-
-// 文件压缩
-// app.use(compress({
-//   filter: (contentType) => {
-//     return /text|application/i.test(contentType)
-//   }
-// }))
-
 // 缓存
 app.use(cacheControl({
   public: true,
@@ -67,8 +57,14 @@ app.on('error', (err, ctx) => {
   ctx.body = err.message
 })
 
-// 创建服务
+// 创建socket服务
+const XSocket = require('./utils/x-socket')
+const io = new IO()
+io.attach(app)
+XSocket(io)
+
+// 创建WEB服务
 const port = config.port || 3000
 app.listen(port, () => {
-  console.log('Koa is listening in ' + port)
+  console.log('Koa is listening in http://172.0.0.1:' + port)
 })
