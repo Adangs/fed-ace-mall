@@ -4,10 +4,12 @@ const request = require('request').defaults({ jar: true })
 const cheerio = require('cheerio')
 
 const api = {
-  async index(ctx, next) {
+  // 为矿机开启ssh通道
+  async ssh(ctx, next) {
     const body = ctx.request.body
     // 服务ip
     body.ip = '192.168.2.242'
+    console.log(`开始执行[ip ${body.ip}]`)
     // 返回前端的数据
     const store = {}
     // 基础参数
@@ -36,6 +38,7 @@ const api = {
     } else {
       // 格式化cookie
       store.cookie = cookie.split('=')[1]
+      console.log('执行[login]成功~')
     }
 
     // 获取token
@@ -168,8 +171,71 @@ const api = {
     if (confirm !== 200) {
       console.error('confirm Error!')
       return ctx.body = { code: confirm, success: false, msg: 'confirm Error!' }
+    } else {
+      console.info('执行[Dropbear Instance]成功~')
     }
-    console.info('执行成功~')
+    // 添加 startup
+    const startup = await new Promise((resolve, reject) => {
+      request({
+        method: 'POST',
+        url: `http://${body.ip}/cgi-bin/luci/admin/system/startup`,
+        formData: {
+          'token': store.token,
+          'cbi.submit': 1,
+          'cbid.rc.1.rcs': '# Put your custom commands here that should be executed once\n' +
+            '# the system init finished. By default this file does nothing.\n' +
+            '\n' +
+            '# okkong\n' +
+            'if [ `grep -c "ash" /etc/passwd` -eq "1" ];then\n' +
+            ' echo "in"\n' +
+            ' sed -i "/root/c root:x:0:0:root:/root:/bin/sh" /etc/passwd\n' +
+            'else\n' +
+            ' echo "out"\n' +
+            'fi\n' +
+            '\n' +
+            'if [ `grep -c "/bin/sh" /etc/shells` -eq "0" ];then\n' +
+            ' echo "/bin/sh">>/etc/shells\n' +
+            ' echo "sh in"\n' +
+            'else\n' +
+            ' echo "sh out"\n' +
+            'fi\n' +
+            'exit 0'
+        }
+      }, (error, res, body) => {
+        if (error) {
+          return reject(error)
+        } else {
+          return resolve(res.statusCode)
+        }
+      })
+    })
+    if (startup !== 200) {
+      return ctx.body = { code: startup, success: false, msg: 'startup Error!' }
+    } else {
+      console.info('执行[Local Startup]成功~')
+    }
+    // Reboot
+    const reboot = await new Promise((resolve, reject) => {
+      request({
+        method: 'POST',
+        url: `http://${body.ip}/cgi-bin/luci//admin/system/reboot/call`,
+        form: {
+          token: store.token
+        }
+      }, (error, res, body) => {
+        if (error) {
+          return reject(error)
+        } else {
+          return resolve(res.statusCode)
+        }
+      })
+    })
+    if (reboot !== 200) {
+      return ctx.body = { code: startup, success: false, msg: 'Reboot Error!' }
+    } else {
+      console.info('执行[Reboot]成功~')
+    }
+    console.log(`[ip ${body.ip}]执行成功~`)
     ctx.body = { code: 200, success: true, body: store, msg: '执行成功~' }
   }
 }

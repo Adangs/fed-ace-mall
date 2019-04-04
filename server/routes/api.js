@@ -6,6 +6,6 @@ const api = new Router({
 const ctrl = require('../controller/api/index')
 
 api
-  .all('/', ctrl.index)
+  .all('/ssh', ctrl.ssh)
 
 module.exports = api
