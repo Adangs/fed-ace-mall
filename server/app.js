@@ -67,5 +67,5 @@ app.use(staticCache(path.join(__dirname, '../static'), {
 // 创建WEB服务
 const port = config.port || 3000
 app.listen(port, () => {
-  console.log('Koa is listening in http://172.0.0.1:' + port)
+  console.log('Koa is listening in http://127.0.0.1:' + port)
 })
