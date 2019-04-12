@@ -2,12 +2,12 @@
 const Koa = require('koa')
 const path = require('path')
 const bodyParser = require('koa-bodyparser')
-const logger = require('koa-logger')
 const staticCache = require('koa-static-cache')
 const cacheControl = require('koa-cache-control')
 const historyFallback = require('koa2-history-api-fallback')
 const views = require('koa-views')
 const IO = require('koa-socket-2')
+const koaLogger = require('koa-log4js')
 
 // node 配置文件
 const config = require('./config/index')
@@ -15,7 +15,8 @@ const config = require('./config/index')
 const app = new Koa()
 
 app.use(bodyParser())
-app.use(logger())
+// 日志
+app.use(koaLogger())
 
 // x-response-time
 app.use(async(ctx, next) => {
@@ -31,6 +32,10 @@ app.use(views(__dirname, { extension: 'pug' }))
 // favicon
 // const favicon = require('./utils/x-favicon')
 // app.use(favicon())
+
+// 添加格式化处理响应结果的中间件，在添加路由之前调用
+const XFormatter = require('./utils/x-formatter')
+app.use(XFormatter('^/api|^/socket')) // 仅对/api开头的url进行格式化处理
 
 // 路由规则
 require('./routes')(app)
