@@ -46,6 +46,24 @@ Vue.directive('xscroll', {
 
 Vue.config.productionTip = false
 
+// 开发环境添加性能检测工具
+if (process.env.NODE_ENV !== 'production' && window.requestIdleCallback) {
+  const FPS = require('./libs/fps-stats').Stats
+  if (window.requestIdleCallback) {
+    const stats = new FPS({
+      top: 0,
+      left: 0
+    })
+    stats.showPanel(0) // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild(stats.dom)
+    const loop = () => {
+      stats.update()
+      requestAnimationFrame(loop)
+    }
+    requestAnimationFrame(loop)
+  }
+}
+
 new Vue({
   router,
   store,

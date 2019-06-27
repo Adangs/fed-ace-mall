@@ -1,5 +1,9 @@
 <template>
-  <p>{{ query }}</p>
+  <div>
+    <ul v-infinite-scroll="load" class="infinite-list" style="overflow-y: auto;">
+      <li v-for="i in count" :key="i" class="infinite-list-item">{{ i }}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -8,7 +12,9 @@ export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      count: 0
+    }
   },
   computed: {
     query() {
@@ -25,6 +31,9 @@ export default {
         url: 'code',
         data: { id: this.query.id }
       })
+    },
+    load() {
+      this.count += 2
     }
   }
 }
